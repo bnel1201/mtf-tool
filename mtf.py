@@ -32,10 +32,12 @@ def retrieve_MTF(x_pos, y_grayval, oversampling=10, crop_factor=4, unit='mm'):
     N = len(psf)
     dx = np.diff(x)[0] # mm
     fmax = 1/(2*dx) # 1/mm
-    df = fmax / (N / 2)
+    df = fmax / (N // 2)
     freq = np.arange(0, fmax, df)
 
-    mtf = pd.DataFrame({f'frequency [1/{unit}]' : freq, 'MTF': np.abs(fft(psf)/np.sum(psf))[:len(psf)//2]})
+    mtfs = np.abs(fft(psf)/np.sum(psf))[:len(psf)//2]
+
+    mtf = pd.DataFrame({f'frequency [1/{unit}]' : freq, 'MTF': mtfs})
     mtf = mtf.applymap(lambda x: np.round(x, decimals=3))
     return mtf
 
@@ -44,7 +46,7 @@ def from_csv(fname):
     csv expected to be in ImageJ output format produced by Radial Profile plugin: <https://imagej.nih.gov/ij/plugins/radial-profile.html>
     Radius_[units], Normalized_Integrated_intensity
     '''
-    df = pd.read_csv(fname)
+    df = pd.read_csv(fname, encoding = 'latin1')
     unit = df.columns[0].split('_')[-1][1:-1]
     data = df.to_numpy()
     x_pos = data[:, 0]
