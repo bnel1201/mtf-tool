@@ -81,6 +81,36 @@ Save the profile using the `Data` --> `Save Data...` window, note the default ou
 
 In this example I saved out a file called `edge_profile.csv` to the current directory.
 
+### Measuring Radial Averages
+
+When measuring noise data or wire phantoms that are small and round, edge profiles may give noisey results. For this we make use of the **ImageJ radial profile plugin**, found here: <https://imagej.nih.gov/ij/plugins/radial-profile.html>
+
+The plugin is called `Radial_Profile.class` and is already included inside `install files`
+
+#### Installing the radial profile plugin
+
+Copied from the [plugin website](https://imagej.nih.gov/ij/plugins/radial-profile.html): Move `Radial_Profile.class` to the **ImageJ plugins folder** and **restart ImageJ**
+
+Fiji/ImageJ is typically installed by default in your home directory, e.g. `c:/Users/LanID/Fiji.app`
+
+![](fiji_location.png)
+
+Inside the Fiji.app folder is the plugins folder and in there is where you will move `Radial_Profile.class` like shown below:
+
+![](radial_profile_in_plugins_folder.png)
+
+#### Using the radial profile plugin
+
+the fastest way to use the plugin is to draw a circle ROI like so (plugin will draw equiangular lines from the center to the perimeter then average them)the select `Radial Profile` from the plugins folder:
+
+![](circle_roi.png)
+
+Before running it will give you the option to change the (x, y) center and the radius, I typically increase the radius by a factor of 2 such that the edge is approximately in the center, the select ok.
+
+![](radial_plugin_output.png)
+
+You can then save out the line profile the usual way described above.
+
 ### Command line usage
 
 - The MTF tool works both from the command line as well as from a graphical program. The command line program works as follows: Starting in the program directory run: `python my_edge_profile.csv`, where you can replace the csv filename with your own.
