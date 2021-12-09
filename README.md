@@ -7,7 +7,7 @@ author: Brandon J. Nelson
 
 The XRI MTF tool is a simple MTF measurement tool/protocal using a small python script and leaning heavily on existing functionality in ImageJ
 
-![](preview.png)
+![](assets/preview.png)
 
 ## Installation
 
@@ -15,7 +15,7 @@ The following assumes installations of python and ImageJ
 
 To check if you have a version of python installed, open a command line and type `python`
 
-![](python_installed.png)
+![](assets/python_installed.png)
 
 If you do not get something like above, first download python from: <https://www.python.org/downloads/>
 
@@ -27,7 +27,7 @@ Likewise ImageJ can be downloaded here (Fiji is just ImageJ and is the recommend
    - **Preferred:** Using git: `git clone https://rohaslrailgit.mayo.edu/ctcic/mct-developement/xri-mtf.git`
    - If you prefer not to use git or don't have it installed you can also code to the code site: <https://rohaslrailgit.mayo.edu/ctcic/mct-developement/xri-mtf> and find the download button to download everything as a zip folder. Once you unzip it you can proceed with the rest of the install.
 
-![](download_as_zip_option.png)
+![](assets/download_as_zip_option.png)
 
 2. change the working directory to be in the program folder
    - `cd xri-mtf`
@@ -41,7 +41,7 @@ Likewise ImageJ can be downloaded here (Fiji is just ImageJ and is the recommend
 
 The following window should appear:
 
-![](gui_preview.png)
+![](assets/gui_preview.png)
 
 ###  (optional) If you want an executable shortcut
 
@@ -55,7 +55,7 @@ Once pyinstaller finishes, in your file explorer, inside the program folder ("xr
 
 right click on it and select `create shortcut`, you can then move this shortcut to your desktop or any convenient location to call the program from.
 
-![](create_shortcut.png)
+![](assets/create_shortcut.png)
 
 ## Usage
 
@@ -73,11 +73,11 @@ If you want the MTF results in proper units the image must have a spatial calibr
 
 The simplest MTF measurement starts with an edge profile from a single line ROI as shown below (note the <ctrl>+<k> keyboard shortcut to quickly grab a line profile from a line ROI). This will pull up a plot of the profile.
 
-![](edge_profile.png)
+![](assets/edge_profile.png)
 
 Save the profile using the `Data` --> `Save Data...` window, note the default output is csv.
 
-![](save_data_tab.png)
+![](assets/save_data_tab.png)
 
 In this example I saved out a file called `edge_profile.csv` to the current directory.
 
@@ -93,31 +93,31 @@ Copied from the [plugin website](https://imagej.nih.gov/ij/plugins/radial-profil
 
 Fiji/ImageJ is typically installed by default in your home directory, e.g. `c:/Users/LanID/Fiji.app`
 
-![](fiji_location.png)
+![](assets/fiji_location.png)
 
 Inside the Fiji.app folder is the plugins folder and in there is where you will move `Radial_Profile.class` like shown below:
 
-![](radial_profile_in_plugins_folder.png)
+![](assets/radial_profile_in_plugins_folder.png)
 
 #### Using the radial profile plugin
 
 the fastest way to use the plugin is to draw a circle ROI like so (plugin will draw equiangular lines from the center to the perimeter then average them)the select `Radial Profile` from the plugins folder:
 
-![](circle_roi.png)
+![](assets/circle_roi.png)
 
 Before running it will give you the option to change the (x, y) center and the radius, I typically increase the radius by a factor of 2 such that the edge is approximately in the center, the select ok.
 
-![](radial_plugin_output.png)
+![](assets/radial_plugin_output.png)
 
 You can then save out the line profile the usual way described above.
 
 ### Command line usage
 
-- The MTF tool works both from the command line as well as from a graphical program. The command line program works as follows: Starting in the program directory run: `python my_edge_profile.csv`, where you can replace the csv filename with your own.
+- The MTF tool works both from the command line as well as from a graphical program. The command line program works as follows: Starting in the program directory run: `python mtf.py my_edge_profile.csv`, where you can replace the csv filename with your own.
 
 Without any other arguments the MTF values will be output straight to the terminal
 
-![](terminal_output.png)
+![](assets/terminal_output.png)
 
 #### Saving to csv file
 
@@ -139,11 +139,11 @@ python mtf_gui.py
 
 Once the program is opened you can select the `Browse` button to navigate to and select a csv file containing an edge profile:
 
-![](gui_browse.png)
+![](assets/gui_browse.png)
 
 Selecting start will then run the program and output the results to the program window:
 
-![](program_window_output.png)
+![](assets/program_window_output.png)
 
 You can also specify an output filename (don't forget to have a `.csv` ending) to save the output to.
 
@@ -158,11 +158,11 @@ With the MTF csv output you can visualize the result in a variet of ways such as
 
 In the ImageJ plotting window you can highlight individual points and adjust the axis limits interactively to better visualize the results.
 
-![](imagej_plot.png)
+![](assets/imagej_plot.png)
 
 ImageJ has nice plotting capabilities if you want to compare MTF curves directly from different systems rather than just comparing their 10% cutoff value.
 
-![](imagej_multiplot.png)
+![](assets/imagej_multiplot.png)
 
 Note: the red curve is edge-enhanced so it has an MTF > 1 at a spatial frequency of around 5 lp/mmm.
 
@@ -176,9 +176,9 @@ While the full curve contains the full spatial response of the imaging system so
 
 To see how this result translates to the smallest resolvable bar pattern we can refer to the [QRM bar pattern table](https://www.qrm.de/en/products/micro-ct-bar-pattern-phantoms/?type=3451&downloadfile=1702&cHash=4896f4ad318a4cd94f022f8b62d25829):
 
-![](qrm_linepairs_to_line_width.png)
+![](assets/qrm_linepairs_to_line_width.png)
 
-![](qrm_bar_pattern_modules.png)
+![](assets/qrm_bar_pattern_modules.png)
 
 Thus $MTF_{0.1} = 13$ [1/mm] works out to be somewhat better than the 50 um linewidth bar patterns. Thus in the A block the first 3 patterns should be clearly visible, while smaller patterns should be harder to resolve.
 
