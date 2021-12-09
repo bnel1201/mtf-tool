@@ -1,4 +1,4 @@
-from mtf import from_csv
+from mtf_cli import from_csv
 from gooey import Gooey, GooeyParser
 
 @Gooey

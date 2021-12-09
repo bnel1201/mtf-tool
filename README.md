@@ -33,7 +33,7 @@ Likewise ImageJ can be downloaded here (Fiji is just ImageJ and is the recommend
    - `cd xri-mtf`
 
 3. install dependencies
-   - `pip install -r requirements.txt`
+   - `pip install .`
 
 4. test run:
 
@@ -71,7 +71,7 @@ If you want the MTF results in proper units the image must have a spatial calibr
 
 ### Measuring Edge Spread Profiles
 
-The simplest MTF measurement starts with an edge profile from a single line ROI as shown below (note the <ctrl>+<k> keyboard shortcut to quickly grab a line profile from a line ROI). This will pull up a plot of the profile.
+The simplest MTF measurement starts with an edge profile from a single line ROI as shown below (note the \<ctrl\>+\<k\> keyboard shortcut to quickly grab a line profile from a line ROI). This will pull up a plot of the profile.
 
 ![](assets/edge_profile.png)
 
@@ -113,7 +113,7 @@ You can then save out the line profile the usual way described above.
 
 ### Command line usage
 
-- The MTF tool works both from the command line as well as from a graphical program. The command line program works as follows: Starting in the program directory run: `python mtf.py my_edge_profile.csv`, where you can replace the csv filename with your own.
+- The MTF tool works both from the command line as well as from a graphical program. The command line program works as follows: Starting in the program directory run: `mtf my_edge_profile.csv`, where you can replace the csv filename with your own.
 
 Without any other arguments the MTF values will be output straight to the terminal
 

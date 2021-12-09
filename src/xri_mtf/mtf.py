@@ -12,8 +12,9 @@ def interpolate_signal(x_pos, y_grayval, oversampling=10):
 
 def center_peak(psf, crop_factor):
     peak_idx = psf.argmax()
-    start_idx = peak_idx - len(psf)//crop_factor
-    end_idx =  peak_idx + len(psf)//crop_factor
+    start_idx = max(0, peak_idx - len(psf)//crop_factor)
+    end_idx =  min(len(psf), peak_idx + len(psf)//crop_factor)
+    
     return psf[start_idx:end_idx] # center the psf
 
 def retrieve_MTF(x_pos, y_grayval, oversampling=10, crop_factor=4, unit='mm'):
@@ -23,7 +24,6 @@ def retrieve_MTF(x_pos, y_grayval, oversampling=10, crop_factor=4, unit='mm'):
     x = x[1:]
 
     psf = psf/psf.sum()
-    # center and smooth edge noise
     psf = center_peak(psf, crop_factor=crop_factor)
     psf *= np.hanning(len(psf))
 
@@ -46,12 +46,12 @@ def from_csv(fname):
     csv expected to be in ImageJ output format produced by Radial Profile plugin: <https://imagej.nih.gov/ij/plugins/radial-profile.html>
     Radius_[units], Normalized_Integrated_intensity
     '''
-    df = pd.read_csv(fname, encoding = 'latin1')
+    df = pd.read_csv(fname, encoding = 'latin1').dropna()
     unit = df.columns[0].split('_')[-1][1:-1]
     data = df.to_numpy()
     x_pos = data[:, 0]
     y_grayval = data[:, 1]
-    return retrieve_MTF(x_pos, y_grayval, unit=unit)
+    return retrieve_MTF(x_pos, y_grayval, unit=unit, oversampling=10, crop_factor=4)
 
 
 def cli():
@@ -69,5 +69,21 @@ def cli():
         print(mtf[(mtf['MTF']<0.01).cumsum()<1].to_string()) #only print MTFs > 1% the rest is useless noise
 
 
-if __name__ == '__main__':
-    cli()
+from gooey import Gooey, GooeyParser
+
+# @Gooey
+def main():
+    parser = GooeyParser(description='Calculate MTF from an ImageJ radial line profile')
+    parser.add_argument('csv_filename',
+                         help='path to csv file output from ImageJ radial line profile',
+                         widget="FileChooser")
+    parser.add_argument('-output_file', default=None)
+
+    args = parser.parse_args()
+
+    mtf = from_csv(args.csv_filename)
+
+    if args.output_file:
+        mtf.to_csv(args.output_file)
+    else:
+        print(mtf[(mtf['MTF']<0.01).cumsum()<1].to_string()) #only print MTFs > 1% the rest is useless noise
