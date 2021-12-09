@@ -24,10 +24,13 @@ Likewise ImageJ can be downloaded here (Fiji is just ImageJ and is the recommend
 ### Install instructions for basic command line usage
 
 1. Copy the files to your local computer:
-   - Using git: `git clone ...`
+   - **Preferred:** Using git: `git clone https://rohaslrailgit.mayo.edu/ctcic/mct-developement/xri-mtf.git`
+   - If you prefer not to use git or don't have it installed you can also code to the code site: <https://rohaslrailgit.mayo.edu/ctcic/mct-developement/xri-mtf> and find the download button to download everything as a zip folder. Once you unzip it you can proceed with the rest of the install.
+
+![](download_as_zip_option.png)
 
 2. change the working directory to be in the program folder
-   - `cd ...`
+   - `cd xri-mtf`
 
 3. install dependencies
    - `pip install -r requirements.txt`
@@ -44,9 +47,15 @@ The following window should appear:
 
 3. Run pyinstaller:  `pyinstaller mtf_gui.py`
 
+This should take 1-2 minutes to complete....
+
 4. Create a shortcut to the executable
 
-In the 
+Once pyinstaller finishes, in your file explorer, inside the program folder ("xri-mtf") navigate to `/dist/mtf_gui/` and inside you will find `mtf_gui.exe`
+
+right click on it and select `create shortcut`, you can then move this shortcut to your desktop or any convenient location to call the program from.
+
+![](create_shortcut.png)
 
 ## Usage
 
