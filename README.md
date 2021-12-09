@@ -69,6 +69,15 @@ If you want the MTF results in proper units the image must have a spatial calibr
 
 - If pixels are already calibrated you can skip this step
 
+#### Spatial units
+
+In clinical CT most MTFs are a function of frequencies in units of 1/cm, while in micro-CT the units are commonly 1/mm. While um are commonly used to described distances in micro-CT they will result in spatial frequencies less than 1, so I recommend converting pixel units to `mm` in ImageJ if they are in microns.
+
+This is done in `Image-->Properties`
+
+![](assets/image_properties.png)
+![](assets/change_pixel_units.png)
+
 ### Measuring Edge Spread Profiles
 
 The simplest MTF measurement starts with an edge profile from a single line ROI as shown below (note the \<ctrl\>+\<k\> keyboard shortcut to quickly grab a line profile from a line ROI). This will pull up a plot of the profile.
