@@ -229,11 +229,7 @@ Thus the MTF is a valuable tool to give you real measurements of a system's spat
 
 ### More on MTF
 
-From Kishore:
-
-Hi Brandon,
-
-Thanks for looping me in. You are right that 1/mm is same as lp/mm. The plot you show uses 1/cm or lp/cm unit in the x axis.
+Note: 1/mm is same as lp/mm, they are often used interchangeably.
 
 The true smallest resolvable object is identified using the cutoff frequency (i.e. the lp/cm or lp/mm when MTF becomes zero). For a 0% MTF = 40 lp/cm, the resolution in um is calculated as 0.5/40 (note it should be 0.5 in the numerator and not 1.0) since the unit is line "pair", so each line in a pair, if resolved, is half of the pair (0.5), which I think you referred to as the blur factor. The limiting resolution is therefore 125 um for 0% at 40 lp/cm. Trivia- this is actually the resolution of Alpha with the sharpest available kernel.
 
