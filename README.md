@@ -120,6 +120,26 @@ Before running it will give you the option to change the (x, y) center and the r
 
 You can then save out the line profile the usual way described above.
 
+#### Robust determination of circle center
+
+Generally hand drawn ROIs work plenty fine for getting a radial averaged point spread function. But if you want to be most accurate you can use the "center of mass" method to measure the absolute center and uee that to update the x, y pixel locations when calculating the radial average.
+
+First threshold the image to get a binary image of the wire, click `auto` and `apply`
+
+![](assets/image_threshold.png)
+
+Then in `Analyze --> Set Measurements...`, make sure `Center of Mass` is ticked
+
+![](assets/set_measure_com.png)
+
+Then select `Analyze --> Measure` which will display the X, Y coordinates of the center (annoyingly in pixel units)
+
+![](assets/com.png)
+
+To correct the location of the center of wire you'll need to divide the measured x, y center by the pixel size to get the x, y pixel indices required by the radial profile plugin as demonstrated below. 
+
+![](assets/corrected_center_radial_profile.png)
+
 ### Command line usage
 
 - The MTF tool works both from the command line as well as from a graphical program. The command line program works as follows: Starting in the program directory run: `mtf my_edge_profile.csv`, where you can replace the csv filename with your own.
@@ -179,6 +199,10 @@ Note: the red curve is edge-enhanced so it has an MTF > 1 at a spatial frequency
 
 Modulation transfer function (MTF) indicates how well contrast (dark to bright or vice versa) can change for a given spatial frequency where a value of 1.0 is complete transfer (ideal). Using the plot above as an example the low frequencies maintain high MTF, so a bar pattern with a bar pattern frequency of 5 bars per mm (i.e. 5 [1/mm] on the frequency axis) will maintain about 60% of its true contrast while the remainder is lost to blur.
 
+### Spatial frequency sampling is determined by profile length
+
+![](frequency_sampling_depends_on_profile_length.png)
+
 #### Summarizing a system's spatial resolution: the 10% cutoff
 
 While the full curve contains the full spatial response of the imaging system sometimes it is convenient to be able to report a single number as the spatial resolution of the system. For this the 10% MTF cutoff is considered a good approximation of the finest detail that can be reasonably resolved. For the results above you can check either the table readout or the plot to find the spatial frequency where the MTF first dips below 10%, here is ~ 13 [1/mm] or 13 [lp/mm].
@@ -202,6 +226,18 @@ The scan that I grabbed that image from had a voxel size of $\Delta d = 25 \mu m
 However we can compare this to our 10% MTF results which empirically tell us what the *actual* smallest structure we can resolve is, by $\Delta x \approx \frac{1}{MTF_{0.1}} = 77 \mu {m}$. This is close to but not exactly our voxel size which gives us our theoretical max resolution. Other factors from the system such as focal spot size, geometry misalignment, reconstruction kernel could cause this additional blurring.
 
 Thus the MTF is a valuable tool to give you real measurements of a system's spatial resolution to compare amongst its theoretical value as well as between systems. It can also be used to compare reconstruction kernels or look for specific frequencies other than $MTF_{0.1}$ that are enhanced.
+
+### More on MTF
+
+From Kishore:
+
+Hi Brandon,
+
+Thanks for looping me in. You are right that 1/mm is same as lp/mm. The plot you show uses 1/cm or lp/cm unit in the x axis.
+
+The true smallest resolvable object is identified using the cutoff frequency (i.e. the lp/cm or lp/mm when MTF becomes zero). For a 0% MTF = 40 lp/cm, the resolution in um is calculated as 0.5/40 (note it should be 0.5 in the numerator and not 1.0) since the unit is line "pair", so each line in a pair, if resolved, is half of the pair (0.5), which I think you referred to as the blur factor. The limiting resolution is therefore 125 um for 0% at 40 lp/cm. Trivia- this is actually the resolution of Alpha with the sharpest available kernel.
+
+There is more to this, but without confusing you any further, please remember this detail - I have often seen the misconception (in uCT world) that the detector pixel size or the recon voxel size is the system's resolution. For instance, on Alpha we can get voxels as small 48 um (x-y direction), the detector pixel size is 151 um (isocenter), and the actual final image resolution is >= 125 um depending on the recon kernel. Voxel size and detector size only indirectly play a role in bringing out the best system resolution, but their individual sizes are not the final resolution of the system.
 
 ## References
 

@@ -15,7 +15,8 @@ def main():
 
     if args.output_file:
         mtf.to_csv(args.output_file)
-    else:
-        print(mtf[(mtf['MTF']<0.01).cumsum()<1].to_string()) #only print MTFs > 1% the rest is useless noise
+        print(f'Results saved to {args.output_file}')
+
+    print(mtf[(mtf['MTF']<0.01).cumsum()<1].to_string()) #only print MTFs > 1% the rest is useless noise
 
 main()
