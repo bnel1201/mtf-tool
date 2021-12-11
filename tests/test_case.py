@@ -1,25 +1,26 @@
-from xri_mtf import mtf
+# %%
+import numpy as np
 from pathlib import Path
+
+from xri_mtf import mtf
+
 
 fdir = Path(__file__).parent
 
 def test_load_mu_and_odd():
-    fname = fdir / 'Values.csv'
-    m = mtf.from_csv(fname)
-    assert len(m) > 0
+    assert len(mtf.from_csv(fdir/'Values.csv')) > 0
 
 # test_load_mu_and_odd()
 
 def test_load_originals():
-    fname = fdir / 'atten.csv'
-    m = mtf.from_csv(fname)
-    assert len(m) > 0
+    assert len(mtf.from_csv(fdir/'atten.csv')) > 0
 
 
 def test_load_mm():
-    fname = fdir/'Values_mm.csv'
-    m = mtf.from_csv(fname)
-    print(m.to_string())
-    assert len(m) > 0
+    assert len(mtf.from_csv(fdir/'Values_mm.csv')) > 0
+# %%
 
-test_load_mm()
+
+def test_ideal_edge():
+    m = mtf.from_csv(fdir/'ideal_edge_sim.csv')
+    assert np.sum(m['MTF'] > 0.999) > 50
